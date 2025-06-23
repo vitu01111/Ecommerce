@@ -8,13 +8,6 @@
     --sidebar-expanded-gp-color: #fff;
     --sidebar-item-active-bg: #1a73e8;
 }
-body {
-
-    background: #fff;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
 * {
     margin: 0;
     padding: 0;
@@ -22,11 +15,23 @@ body {
 }
 
 body {
-    font-family: 'DM Sans', Arial, sans-serif;
+    font-family: 'DM Sans', Arial, sans-serif !important;
     margin: 0;
     padding: 0;
     background-color: #e8e8e8;
-    color: #333;
+    background: #fff;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+select,
+input,
+textarea,
+button,
+span,
+a{
+    font-family: 'DM Sans', Arial, sans-serif !important;
 }
 /* body {
     font-family: 'DM Sans', Arial, sans-serif;

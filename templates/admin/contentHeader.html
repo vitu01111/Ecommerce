@@ -26,28 +26,29 @@
             <hr>
             <ul class="profile-menu">
                 <li>
-                   <i class="material-symbols-outlined"> account_circle</i>
+                   <i class='bx bx-user'></i> 
                     <div>
                         <p>My Profile </p>
                         <span>Account Settings</span>
                     </div>
                 </li>
                 <li>
-                    <i class="material-symbols-outlined"> alternate_email</i>
+                    <i class='bx bx-at'></i> 
                     <div>
                         <p>My Inbox </p>
                         <span>Messages & Emails</span>
                     </div>
                 </li>
                 <li>
-                    <i class="material-symbols-outlined"> task_alt</i>
+                    <i class='bx bx-check-circle'></i> 
                     <div>
                         <p>My Tasks </p>
                         <span>To-do and Daily Tasks</span>
                     </div>
                 </li>
             </ul>
-            <button class="logout-btn" @click="signOut">
+            <a href="/auth/logout">
+            <button class="logout-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -56,6 +57,7 @@
                 </svg>
                 <span>Logout</span>
             </button>
+            </a>
         </div>
     </ul>
 </div>

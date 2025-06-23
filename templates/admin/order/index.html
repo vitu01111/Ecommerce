@@ -1,16 +1,16 @@
-{% extends "base.html" %}
+{% extends "admin/base.html" %}
 
 {% block title %}Order Management{% endblock %}
 
 {% block headerTitle %}Order Management{% endblock %}
 
-{% set createURl = '/orders/Create' %}
+{% set createURl = '/administrator/orders/Create' %}
 
 {% block addUrl %}
 <div class="topbarActions">
     <a href="{{ createURl }}">
         <button class="search-btn">
-            <span class="material-symbols-outlined">add</span>
+            <i class='bx bx-plus'></i> 
             <span>Add New</span>
         </button>
     </a>
@@ -124,7 +124,7 @@
 </div>
 
 <!-- Include Delete Dialog Component -->
-{% include 'components/DialogDelete.html' %}
+{% include 'admin/components/DialogDelete.html' %}
 
 
 {% endblock %}

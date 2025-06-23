@@ -35,8 +35,10 @@ jwt = JWTManager(app)
 # Website
 # Import and register blueprints
 from src.Website.home import home_bp
+from src.Website.product.route import product_bp
 
 app.register_blueprint(home_bp, url_prefix='/')
+app.register_blueprint(product_bp, url_prefix='/product')
 
 
 # Admin
