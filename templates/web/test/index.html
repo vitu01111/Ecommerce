@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-...your-integrity-hash-here...=" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search...">
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="menu-item active">
+                    <a href="#" data-menu-id="option1">
+                        <i class="fas fa-clock"></i>
+                        <span>Option 1</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" data-menu-id="option2">
+                        <i class="fas fa-desktop"></i>
+                        <span>Option 2</span>
+                    </a>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" data-menu-id="user">
+                        <i class="fas fa-user"></i>
+                        <span>User</span>
+                        <i class="fas fa-chevron-down submenu-icon"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">View Users</a></li>
+                        <li><a href="#">Add User</a></li>
+                        <li><a href="#">User Roles</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item has-submenu">
+                    <a href="#" data-menu-id="team">
+                        <i class="fas fa-users"></i>
+                        <span>Team</span>
+                        <i class="fas fa-chevron-down submenu-icon"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="#">View Teams</a></li>
+                        <li><a href="#">Manage Teams</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" data-menu-id="files">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button id="sidebar-toggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <nav class="breadcrumb">
+                    <span>User</span> / <span>Bill</span>
+                </nav>
+            </header>
+
+            <div class="content-body">
+                <div class="content-box">
+                    <p>Bill is a cat.</p>
+                </div>
+                </div>
+        </main>
+    </div>
+
+    <script src="./dashboard.js"></script>
+</body>
+</html>

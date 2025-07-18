@@ -1,0 +1,208 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Slider Management{% endblock %}
+
+{% block headerTitle %}Slider Management{% endblock %}
+{% set createURl = '/administrator/slider/create' %}
+
+{% block addUrl %}
+<div class="topbarActions">
+    <a href="{{ createURl }}">
+        <button class="search-btn">
+            <i class='bx bx-plus'></i> 
+            <span>Add New</span>
+        </button>
+    </a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="index-container" x-data="dropdown">
+      <div class="header">
+        <div class="header-right">
+            <a href="{{createURl}}" class="header-title">
+                <button class="add-app-btn">
+                    <span class="material-symbols-outlined">add</span>
+                    <span>Add New</span>
+                </button>
+            </a>
+        </a>
+        </div>
+    </div>
+    <div class="table">
+        <div class="table-wrapper">
+            <div class="table-header">
+                <div class="row text left table-row-16">
+                    <span>Slider ID</span>
+                </div>
+                <div class="row text left table-row-16">
+                    <span>Slider Name</span>
+                </div>
+                <div class="row text left table-row-16">
+                    <span>
+                        Image</span>
+                </div>
+                
+               
+                 <div class="row text left table-row-16">
+                    <span>Action</span>
+                </div>
+            </div>
+            <div class="table-body">
+                {% if slider %}
+                {% for slider in slider %}
+                <div class="column">
+                    <div class="row text left table-row-16">
+                       
+                        <span>{{ slider.id}}</span>
+                    </div>
+                    <div class="row text left table-row-16">
+                        <span>{{ slider.name }}</span>
+                    </div>
+                    <div class="row text left table-row-16">
+                        <span>{% if slider.image %}
+                            <img src="{{url_for('static',filename='static/uploads/') + slider.image}}" width="55px" height="40px" alt="img">
+                            {% else%}
+                            No Image 
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <div class="row text left table-row-5">
+                        <div class="dropdown" style="position: relative;">
+                            <button class="action-btn" 
+                                    type="button"
+                                    @click="toggleDropdown('menu-{{ loop.index }}')"
+                                    :class="{ 'active': isOpen('menu-{{ loop.index }}') }">
+                                <i class='bx  bx-dots-vertical' style="font-size: 19px;"></i> 
+                            </button>
+                            <ul class="tb-dropdown-menu" 
+                                x-show="isOpen('menu-{{ loop.index }}')"
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
+                                x-transition:enter-end="transform opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="transform opacity-100 scale-100"
+                                x-transition:leave-end="transform opacity-0 scale-95"
+                                style="display: none;">
+                                <!-- <li>
+                                    <button class="dropdown-item" type="button"
+                                        @click="showDeleteConfirmation('{{ slider.name or ('Order #' ~ loop.index) }}')">
+                                        <i class="bx bx-trash"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                </li>-->
+                                 <li> 
+                                    <form action="{{ url_for('slider.deleteSlider', delete_id=slider.id) }}" method="POST" style="display:inline;">
+                                        <button class="dropdown-item" type="submit" onclick="return confirm('Are you sure you want to delete this slider?');">
+                                            <i class="bx bx-trash"></i>
+                                            <span>Delete</span>
+                                        </button>
+                                    </form>
+                                </li>
+                                
+                                  <li>
+                                       <a href="/administrator/slider/edit/{{slider.id}}"> 
+                                    <button class="dropdown-item" type="button"> 
+                                        
+                                        <i class="bx bx-edit"></i>
+                                        <span>Edit</span>
+                                    </button>
+                                     </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url_for('order_bp.orders_view') }}">
+                                    <button class="dropdown-item" type="button">
+                                        <i class='bx bx-eye'></i>
+                                        <span style="padding-right: 0;">View Detail</span>
+                                    </button>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="column">
+                    <div class="row text left table-row-10 empty-row">
+                        <span>No recent orders found.</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>    </div>
+    
+   
+    
+    <!-- Add test content to make page scrollable for testing -->
+    
+</div>
+
+<!-- Include Delete Dialog Component -->
+{% include 'admin/components/DialogDelete.html' %}
+
+
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdown', () => ({
+            openDropdown: null,
+            showDeleteDialog: false,
+            itemToDelete: null,
+            dialogConfig: {},
+            
+            init() {
+                console.log('Alpine dropdown component initialized!');
+
+                console.log(this.$store.DialogDelete.showDeleteDialog,"$store.DialogDelete.showDeleteDialog");
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.dropdown')) {
+                        this.openDropdown = null;
+                    }
+                });
+            },
+            
+            toggleDropdown(menuId) {
+                this.openDropdown = this.openDropdown === menuId ? null : menuId;
+            },
+            
+            isOpen(menuId) {
+                return this.openDropdown === menuId;
+            },
+            
+            // Generic dialog method that accepts configuration
+            showDialog(config) {
+                this.dialogConfig = config;
+                this.itemToDelete = { id: config.itemId, name: config.itemName };
+                this.showDeleteDialog = true;
+                this.openDropdown = null;
+            },
+            
+            // Specific delete confirmation method
+            showDeleteConfirmation(orderId, orderName) {
+                SelectOption({
+                    title: 'Confirm Deletion',
+                    description: `Are you sure you want to delete ${orderName}?`,
+                    icon: 'delete',
+                    itemId: orderId,
+                    itemName: orderName,
+                    afterClose: (res) => {
+                        console.log("52525252@@@!11");
+                        if (res) {
+                            this.$dispatch('order-deleted', { id: orderId });
+                        }
+                    }
+                });
+            },
+        }))
+    })
+</script>
+{% endblock %}

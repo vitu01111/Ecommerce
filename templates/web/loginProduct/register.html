@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      background: #10bdbd;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .register-container {
+      background: transparent;
+      padding: 40px 30px 30px 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      width: 340px;
+      text-align: center;
+    }
+    .register-container h2 {
+      color: #fff;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+    .register-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 30px;
+      padding: 8px 18px;
+      margin-bottom: 0;
+    }
+    .input-group i {
+      color: #10bdbd;
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+    .input-group input {
+      border: none;
+      outline: none;
+      background: transparent;
+      flex: 1;
+      font-size: 1rem;
+      padding: 8px 0;
+      color: #333;
+    }
+    .register-btn {
+      background: #fff;
+      color: #10bdbd;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 8px;
+    }
+    .register-btn:hover {
+      background: #0ea0a0;
+      color: #fff;
+    }
+    .login-link {
+      display: block;
+      margin-top: 18px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.98rem;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .login-link:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>USER REGISTER</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('loginPro.registerProductData') }}">
+      <div class="input-group">
+        <i class="fa fa-user"></i>
+        <input type="text" name="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fa fa-envelope"></i>
+        <input type="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <button class="register-btn" type="submit">
+        <i class="fa fa-user-plus"></i> REGISTER
+      </button>
+    </form>
+    <a href="{{ url_for('loginPro.loginProduct') }}" class="login-link">Already have an account? Login</a>
+  </div>
+</body>
+</html>

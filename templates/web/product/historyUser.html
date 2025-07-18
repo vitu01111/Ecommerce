@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Orders History</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+   
+      .footer {
+        background: #f8ffae;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+        box-shadow: 0 -2px 12px rgba(67,198,172,0.10);
+        margin-top: 40px;
+        padding-top: 40px;
+        padding-bottom: 24px;
+      }
+      .footer h5 {
+        color: #2d7266;
+        font-weight: bold;
+        margin-bottom: 18px;
+        letter-spacing: 1px;
+      }
+      .footer address, .footer p, .footer ul {
+        font-size: 1.08rem;
+        color: #444;
+      }
+      .footer ul {
+        padding-left: 0;
+        list-style: none;
+      }
+      .footer li {
+        margin-bottom: 10px;
+      }
+      .footer a {
+        font-size: 1.08rem;
+        color: #2d7266;
+        transition: color 0.2s;
+      }
+      .footer a:hover {
+        color: #43c6ac;
+        text-decoration: underline;
+      }
+      .footer hr {
+        border-top: 1.5px solid #e0e0e0;
+        margin: 32px 0 18px 0;
+      }
+      .footer .text-center {
+        color: #888;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+      }
+      @media (max-width: 767px) {
+        .footer {
+          border-radius: 16px 16px 0 0;
+          padding-top: 24px;
+        }
+        .footer h5 {
+          margin-top: 18px;
+        }
+      }
+      .text-danger {
+        color: #e74c3c !important;
+      }
+      .navbar .nav-link {
+       
+        font-size: 20px;
+        margin-right: 10px;
+      }
+      .navbar .nav-link[href*="login"], 
+.navbar .nav-link[href*="register"] {
+  color: #fff !important;
+}
+  .navbar .nav-link.disabled {
+        color: white !important;
+      }
+      .form-inline .form-control {
+        border-radius: 8px;
+      }
+      .form-inline .btn {
+        border-radius: 8px;
+      }
+       
+
+       .profile-header-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 16px;
+    vertical-align: middle;
+  }
+  .profile-header-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #43c6ac;
+    background: #f8ffae;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(67,198,172,0.10);
+  }
+  .profile-header-img:active,
+  .profile-header-img:focus {
+    box-shadow: 0 4px 16px rgba(67,198,172,0.18);
+  }
+   .profile-header-popup {
+    display: none;
+    position: absolute;
+    top: 54px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(67,198,172,0.18);
+    padding: 18px 28px;
+    min-width: 220px;
+    z-index: 100;
+    text-align: center;
+  }
+  .profile-header-container.show-popup .profile-header-popup {
+    display: block;
+  }
+       body {
+        background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+        font-family: 'Battambang', Arial, sans-serif;
+        min-height: 100vh;
+      }
+      a {
+        font-size: 23px;
+      }
+      .navbar {
+        box-shadow: 0 2px 12px rgba(67,198,172,0.10);
+      }
+      .carousel-inner {
+        height: 500px;
+      }
+      .carousel-item img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 600px;
+        width: auto;
+        object-fit: cover;
+        object-position: center;
+        max-width: 100%;
+        border-radius: 10px;
+        background: #eee;
+      }
+      .top-card {
+        margin-top: 10px;
+      }
+      .card {
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(67,198,172,0.10);
+        transition: transform 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(67,198,172,0.18);
+      }
+      .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+      .card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+      .btn {
+        width: 80px;
+      }
+    body {
+      background: #fafafa;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .product-img {
+      border-radius: 18px;
+      background: #fff;
+      width: 100%;
+      object-fit: cover;
+      max-height: 700px;   /* Increased from 520px */
+      max-width: 600px;    /* Increased from 420px */
+    }
+    .details-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 40px 32px;
+      box-shadow: 0 2px 16px 0 #0001;
+    }
+    .star {
+      color: #ffc107;
+      font-size: 1.1rem;
+    }
+    .size-btn, .color-btn {
+      border: none;
+      outline: none;
+      padding: 8px 22px;
+      border-radius: 10px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: #f7f5f2;
+      color: #222;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .size-btn.active {
+      background: #222;
+      color: #fff;
+    }
+    .color-btn {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border-radius: 50%;
+      border: 2px solid #eee;
+      background: #f7f5f2;
+      position: relative;
+    }
+    .color-btn.selected {
+      border: 2px solid #bfa074;
+      box-shadow: 0 0 0 2px #f5e5d0;
+    }
+    .color-sample {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto;
+      margin-top: 3px;
+    }
+    .qty-box {
+      background: #f7f5f2;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      width: 140px;
+      justify-content: space-between;
+      margin-right: 16px;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: #222;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .qty-btn:hover {
+      background: #ececec;
+    }
+    .wishlist-btn {
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 12px;
+      padding: 10px 32px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-left: 12px;
+      transition: border 0.2s, background 0.2s;
+    }
+    .wishlist-btn:hover {
+      border: 1.5px solid #222;
+      background: #f7f5f2;
+    }
+    .add-cart-btn {
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      width: 100%;
+      margin-top: 18px;
+      transition: background 0.2s;
+    }
+    .add-cart-btn:hover {
+      background: #444;
+    }
+    @media (max-width: 991px) {
+      .details-card { padding: 24px 10px; }
+    }
+ 
+    body {
+      background: #f7f7f7;
+    }
+    .history-header {
+      background: #fff;
+      border-radius: 12px 12px 0 0;
+      padding: 32px 32px 16px 32px;
+      margin-bottom: 0;
+      box-shadow: 0 2px 8px rgba(67,198,172,0.08);
+      position: relative;
+    }
+    .export-btn {
+      background: #eafff3;
+      color: #1e7e34;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 8px 18px;
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(67,198,172,0.08);
+      font-size: 1rem;
+    }
+    .export-btn:hover {
+      background: #43c6ac;
+      color: #fff;
+    }
+    .custom-table {
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 8px rgba(67,198,172,0.08);
+      overflow: hidden;
+    }
+    .custom-table th, .custom-table td {
+      vertical-align: middle;
+      border: none;
+    }
+    .custom-table thead th {
+      background: #f5f5f5;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #222;
+      border-bottom: 2px solid #e0e0e0;
+      padding-top: 18px;
+      padding-bottom: 18px;
+    }
+    .custom-table thead th .fa {
+      margin-right: 6px;
+      color: #888;
+    }
+    .custom-table tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .custom-table tbody tr:last-child {
+      border-bottom: none;
+    }
+    .order-link {
+      color: #2ecc71;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.05rem;
+    }
+    .order-link:hover {
+      text-decoration: underline;
+    }
+    .price-green {
+      color: #2ecc71;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    @media (max-width: 767px) {
+      .history-header, .custom-table {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .history-header {
+        padding: 18px 8px 10px 8px;
+      }
+      .export-btn {
+        position: static;
+        float: none;
+        margin: 12px 0 0 0;
+        display: block;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+     <div class="navbar sticky-top" style="background: #43c6ac;">
+  <nav class="navbar navbar-expand-md navbar-dark container">
+    <a class="navbar-brand" href="/website/products"><i class="fa-solid fa-house-user"></i></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-nav d-flex w-100 align-items-center" style="font-family: 'Battambang', Khmer OS, Arial, sans-serif;">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/website/products">Product</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">News</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Information</a>
+          </li>
+        </ul>
+    <form class="form-inline my-2 my-lg-0" method="get" action="/order/historyUser/{{ user_id }}">
+    <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search" value="{{ request.args.get('q','')}}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    {% if request.args.get('q') %}
+      <a href="/order/historyUser/{{user_id}}" class=" btn btn-secondary ml-2">Clear</a>
+    {% endif %}
+  </form>
+
+   
+
+  
+      </div>
+    </div>
+  </nav>
+</div>
+  <div class="container py-4">
+    <div class="history-header mb-0">
+      <h3 class="fw-bold mb-1">Orders History</h3>
+      <div class="mb-2 text-muted" style="font-size:1.1rem;">
+        <i class="fa fa-list"></i> Order details
+      </div>
+      <button class="export-btn"><i class="fa fa-file-excel"></i> Export Excel</button>
+    </div>
+    <div class="table-responsive custom-table p-0">
+      <table class="table mb-0 align-middle">
+        <thead>
+          <tr>
+            <th><i class="fa fa-hashtag"></i>Order Number</th>
+            <th><i class="fa fa-clipboard-list"></i>Order name</th>
+            <th><i class="fa fa-dollar-sign"></i>Price</th>
+            <th><i class="fa fa-calendar"></i>Buy Date</th>
+            
+            <th><i class="fa fa-calendar-check"></i>Expire Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order.user_id }}</td>
+            <td>{{ order.name }}</td>
+            <td>{{ order.price}}</td>
+            <td>{{ order.date if order.date else '' }}</td>
+            <td>{{ order.created_at or '' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <footer class="footer text-dark py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>About Us</h5>
+          <p>We are a company that does awesome things.</p>
+        </div>
+        <div class="col-md-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-decoration-none text-dark">Home</a></li>
+            <li><a href="#" class="text-decoration-none text-dark">Services</a></li>
+            <li><a href="#" class="text-decoration-none text-dark">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Contact</h5>
+          <address>
+            1234 Street Name<br>
+            City, Country<br>
+            Email: info@example.com
+          </address>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center mb-0">&copy; 2025 Your Company. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

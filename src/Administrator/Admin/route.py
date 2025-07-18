@@ -3,12 +3,12 @@ from src.Models.Admin import Admin
 from .form import AdminForm
 from src.db import db
 
-admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
+admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/')
 def index():
     admins = Admin.query.all()
-    return render_template('Admin/admin/index.html', admins=admins)
+    return render_template('admin/admin/index.html', admins=admins)
 
 @admin_bp.route('/create', methods=['GET', 'POST'])
 def create():
@@ -23,7 +23,7 @@ def create():
         db.session.commit()
         flash('Admin created successfully!', 'success')
         return redirect(url_for('admin.index'))
-    return render_template('Admin/admin/create.html', form=form)
+    return render_template('admin/admin/create.html', form=form)
 
 @admin_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):

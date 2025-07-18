@@ -9,11 +9,13 @@
     <div class="sidebar-scroll">
         <!-- Project Overview (highlighted) -->
         <ul class="sidebar-menu">
+            <a href="/administrator/dashboard">
             <li class="{% if active_page == 'overview' %}active{% endif %} overview">
                 <i class="bx bx-home"></i>
-                <span class="menu-label">Project Overview</span>
-                <i class="bx bx-cog menu-gear"></i>
+                <span class="menu-label">Dashboard</span>
+                <!-- <i class="bx bx-cog menu-gear"></i> -->
             </li>
+            </a>
         </ul>
         <!-- Project shortcuts section -->
         <div class="sidebar-heading">Project shortcuts</div>
@@ -22,12 +24,8 @@
                 <i class="bx bx-cloud"></i>
                 <span class="menu-label">Hosting</span>
             </li>
-            <li class="{% if active_page == 'firestore' %}active{% endif %}">
-                <i class="bx bx-data"></i>
-                <span class="menu-label">Firestore Database</span>
-            </li>
             <li class="{% if active_page == 'realtime' %}active{% endif %}">
-                <i class="bx bx-refresh"></i>
+                <i class="bx bx-rotate-ccw"></i>
                 <span class="menu-label">Realtime Database</span>
             </li>
             <li class="{% if active_page == 'auth' %}active{% endif %}">
@@ -40,6 +38,37 @@
                     <span class="menu-label">Order</span>
                 </li>
             </a>
+            <a href="/administrator/category">
+                <li class="{% if active_page == 'auth' %}active{% endif %}">
+                    <i class='bx bx-paint'></i> 
+                    <span class="menu-label">Category</span>
+                </li>
+            </a>
+            <a href="/administrator/employee">
+                <li class="{% if active_page == 'auth' %}active{% endif %}">
+                    <i class='bx bx-film'></i> 
+                    <span class="menu-label">Employee</span>
+                </li>
+            </a>
+             <a href="/administrator/product">
+                <li class="{% if active_page == 'auth' %}active{% endif %}">
+                    <i class='bx bx-store'></i> 
+                    <span class="menu-label">Products</span>
+                </li>
+            </a>
+              <a href="/administrator/slider">
+                <li class="{% if active_page == 'auth' %}active{% endif %}">
+                    <i class='bx bx-chevrons-right-left'></i> 
+                    <span class="menu-label">Slider Management</span>
+                </li>
+            </a>
+            <a href="/administrator/admins">
+                <li class="{% if active_page == 'auth' %}active{% endif %}">
+                    <i class='bx bx-user'></i> 
+                    <span class="menu-label">Admin Management</span>
+                </li>
+            </a>
+           
         </ul>
         <!-- What's new section -->
         <div class="sidebar-heading">What's new</div>

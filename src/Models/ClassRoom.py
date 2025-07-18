@@ -5,10 +5,6 @@ Enhanced with Flask-specific features, validation, and utilities
 """
 
 from datetime import datetime
-from sqlalchemy import func, event
-from sqlalchemy.exc import IntegrityError
-from flask import current_app
-import re
 import uuid
 from src.db import db
 

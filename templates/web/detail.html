@@ -1,0 +1,251 @@
+{% extends 'web/layout.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/product-detail.css') }}">
+{%endblock %}
+
+
+{% block content %}
+<div class="product-detail">
+    <!-- Product Images Section -->
+
+    <div class="product-images">
+        {% if productt %}
+        <div class="main-image">
+            <img src="{{ url_for('static', filename='static/uploads/' + productt.image) }}" alt="">
+            <!-- <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center" alt="Loose Fit Hoodie" id="mainImage"> -->
+        </div>
+        {% else%}
+        <p>No image</p>
+        {% endif %}
+        <div class="thumbnail-images">
+            <img src="{{ url_for('static', filename='static/uploads/' + productt.image) }}" alt="" onclick="changeImage(this)" class="thumbnail active">
+            <!-- <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=center"
+                alt="Hoodie front view" class="thumbnail active" onclick="changeImage(this)">
+            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
+                alt="Hoodie flat lay" class="thumbnail" onclick="changeImage(this)">
+            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=400&fit=crop&crop=face"
+                alt="Hoodie side view" class="thumbnail" onclick="changeImage(this)"> -->
+        </div>
+    </div>
+
+    <!-- Product Info Section -->
+    <div class="product-info">
+        <div class="brand">{{productt.name}}rqwrwrwrrwr</div>
+        <h1 class="product-title">{{category.name}}</h1>
+        <div class="price">${{productt.price}}</div>
+
+        <div class="delivery-info">
+            <i class='bx bx-time-five'></i>
+            <span>Order by <strong>{{productt.date}}</strong> to get next day delivery</span>
+        </div>
+
+        <!-- Size Selection -->
+        <div class="size-section">
+            <label class="section-label">Select Size</label>
+            <div class="size-options">
+                <button class="size-btn active">S</button>
+                <button class="size-btn">M</button>
+                <button class="size-btn">L</button>
+                <button class="size-btn">XXL</button>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="add-to-cart-btn" @click="addCart(`{{productt.id}}`,`{{productt.name}}`,`{{productt.image}}`,`{{productt.price}}`,`{{productt.newCategoryName}}`)">Add to Cart</button>
+            <button class="wishlist-btn">
+                <i class='bx bx-heart'></i>
+            </button>
+        </div>
+
+        <!-- Product Details Accordion -->
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Description & Fit</span>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Loose-fit sweatshirt in soft, medium-weight cotton-blend fabric with a generous, but not
+                        oversized silhouette. Jersey-lined, drawstring hood, dropped shoulders, long sleeves, and a
+                        kangaroo pocket. Wide ribbing at cuffs and hem. Soft, brushed inside.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Shipping</span>
+                    <i class='bx bx-chevron-down'></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="shipping-options">
+                        <div class="shipping-option">
+                            <div class="shipping-icon">
+                                <i class='bx bx-package'></i>
+                            </div>
+                            <div class="shipping-details">
+                                <div class="shipping-title">Over 80%</div>
+                                <div class="shipping-desc">3-4 Working Days</div>
+                            </div>
+                        </div>
+                        <div class="shipping-option">
+                            <div class="shipping-icon">
+                                <i class='bx bx-truck'></i>
+                            </div>
+                            <div class="shipping-details">
+                                <div class="shipping-title">Regular Package</div>
+                                <div class="shipping-desc">10 - 12 October 2024</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Ratings & Reviews Section -->
+<div class="reviews-section">
+    <h2>Rating & Reviews</h2>
+    <div class="reviews-overview">
+        <div class="rating-summary">
+            <div class="rating-score">4,5</div>
+            <div class="rating-details">
+                <div class="rating-text">/5</div>
+                <div class="review-count">(50 New Reviews)</div>
+            </div>
+        </div>
+
+        <div class="rating-breakdown">
+            <div class="rating-bar">
+                <span class="stars">5</span>
+                <div class="bar">
+                    <div class="fill" style="width: 80%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">4</span>
+                <div class="bar">
+                    <div class="fill" style="width: 60%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">3</span>
+                <div class="bar">
+                    <div class="fill" style="width: 40%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">2</span>
+                <div class="bar">
+                    <div class="fill" style="width: 20%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">1</span>
+                <div class="bar">
+                    <div class="fill" style="width: 10%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-review">
+            <div class="reviewer-info">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                    alt="Alex Mathio" class="reviewer-avatar">
+                <div class="reviewer-details">
+                    <div class="reviewer-name">Heak Longdy</div>
+                    <div class="review-date">19 Oct 2024</div>
+                </div>
+            </div>
+            <div class="review-stars">
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+            </div>
+            <p class="review-text">"NextGen's dedication to sustainability and ethical practices resonates strongly with
+                today's consumers, positioning the brand as a responsible choice in this world."</p>
+        </div>
+    </div>
+    <div class="reviews-overview">
+        <div class="rating-summary">
+            <div class="rating-score">4,5</div>
+            <div class="rating-details">
+                <div class="rating-text">/5</div>
+                <div class="review-count">(50 New Reviews)</div>
+            </div>
+        </div>
+
+        <div class="rating-breakdown">
+            <div class="rating-bar">
+                <span class="stars">5</span>
+                <div class="bar">
+                    <div class="fill" style="width: 80%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">4</span>
+                <div class="bar">
+                    <div class="fill" style="width: 60%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">3</span>
+                <div class="bar">
+                    <div class="fill" style="width: 40%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">2</span>
+                <div class="bar">
+                    <div class="fill" style="width: 20%"></div>
+                </div>
+            </div>
+            <div class="rating-bar">
+                <span class="stars">1</span>
+                <div class="bar">
+                    <div class="fill" style="width: 10%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-review">
+            <div class="reviewer-info">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
+                    alt="Alex Mathio" class="reviewer-avatar">
+                <div class="reviewer-details">
+                    <div class="reviewer-name">Heak Longdy</div>
+                    <div class="review-date">19 Oct 2024</div>
+                </div>
+            </div>
+            <div class="review-stars">
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+                <i class='bx bxs-star'></i>
+            </div>
+            <p class="review-text">"NextGen's dedication to sustainability and ethical practices resonates strongly with
+                today's consumers, positioning the brand as a responsible choice in this world."</p>
+        </div>
+    </div>
+</div>
+
+<!-- You Might Also Like Section -->
+<div class="recommendations">
+    <h2>You might also like</h2>
+    <div class="product-grid">
+        <!-- Recommended products will be populated here -->
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/web/product-detail.js') }}"></script>
+{%endblock%}

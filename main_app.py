@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
 """
 Main Flask Application for Ecommerce Project
@@ -9,6 +10,7 @@ import os
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from flask_jwt_extended import JWTManager
+# from src.Website.product.route import product_bp  
 
 
 # Import our database utilities
@@ -35,25 +37,64 @@ jwt = JWTManager(app)
 # Website
 # Import and register blueprints
 from src.Website.home import home_bp
-from src.Website.product.route import product_bp
+# from src.Website.product.route import product_bp
 
-app.register_blueprint(home_bp, url_prefix='/')
-app.register_blueprint(product_bp, url_prefix='/product')
+#for product login
+from src.Website.products.route import product_bp
+from src.Website.productsOld.route import productOld_bp
+from src.Website.loginProduct.route import loinProduct_bp
+# from src.Website.TestLog.rounte import testLog_bp
+from src.Website.Image.route import image_bp
+from src.Website.Order.route import order_router
+from src.Website.auth.login import login_bp
+from src.Website.auth.register import register_bp
+
+app.register_blueprint(home_bp, url_prefix='/dd')
+app.register_blueprint(product_bp,url_prefix='/')
+
+app.register_blueprint(productOld_bp,url_prefix='/website/products')
+app.register_blueprint(loinProduct_bp,url_prefix='/website/loginProduct')
+app.register_blueprint(image_bp,url_prefix='/image/image')
+app.register_blueprint(order_router,url_prefix='/order')
+app.register_blueprint(login_bp, url_prefix='/website/login')
+app.register_blueprint(register_bp, url_prefix='/website/register')
 
 
 # Admin
 # Import and register blueprints
 from src.Administrator.Customer.route import customer_bp
 from src.Administrator.ClassRoom.route import classroom_bp
-from src.Administrator.Order.route import app as order_bp
+from src.Administrator.Order.route import order_bpp
+ 
+
 from src.Administrator.Admin.route import admin_bp
 from src.Administrator.Auth.route import auth_bp
+from src.Administrator.Product.route import prdouct_bp
+from src.Administrator.Category.route import category_bp
+from src.Administrator.Employee.route import employee_bp
+from src.Administrator.Slider.Slider import slider_bp
+from src.Administrator.dashboard.route import dashborad_bp
 
+
+app.register_blueprint(dashborad_bp,url_prefix='/administrator/dashboard')
+
+app.register_blueprint(slider_bp,url_prefix='/administrator/slider')
 app.register_blueprint(customer_bp, url_prefix='/administrator/customers')
 app.register_blueprint(classroom_bp, url_prefix='/administrator/classrooms')
-app.register_blueprint(order_bp, url_prefix='/administrator/orders')
+app.register_blueprint(order_bpp, url_prefix='/administrator/orders')
 app.register_blueprint(admin_bp, url_prefix='/administrator/admins')
 app.register_blueprint(auth_bp, url_prefix='/auth')
+
+app.register_blueprint(prdouct_bp, url_prefix='/administrator/product')
+app.register_blueprint(category_bp,url_prefix='/administrator/category')
+
+app.register_blueprint(employee_bp,url_prefix='/administrator/employee')
+
+# API
+# Import and register blueprints
+from src.Api.order import order_api
+
+app.register_blueprint(order_api,url_prefix='/api/order')
 
 @app.before_request
 def make_session_permanent():
@@ -61,10 +102,8 @@ def make_session_permanent():
 
 if __name__ == '__main__':
     # app = create_app()
-    print("🚀 Starting Flask Ecommerce Application")
+    # print("🚀 Starting Flask Ecommerce Application")
     print("📍 Available routes:")
-    print("   - http://localhost:5002/ (Dashboard)")
-    print("   - http://localhost:5002/customers (Customer Management)")
-    print("   - http://localhost:5002/customers/api (Customer API)")
+    print("   - http://localhost:5002")
     
     app.run(debug=True, host='0.0.0.0', port=5002)

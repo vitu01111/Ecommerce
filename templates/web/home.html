@@ -1,0 +1,339 @@
+<div class="hero-section">
+    <h1>Get Inspired</h1>
+    <p>Browsing for your next long-haul trip, everyday
+        journey,
+        or just fancy a look at what's new? From community
+        favourites to about-to-sell-out items, see them all
+        here.</p>
+</div>
+
+<div class="filters">
+    <div class="filter">
+        <select>
+            <option>Category</option>
+            <option>All Categories</option>
+        </select>
+    </div>
+    <div class="filter">
+        <select>
+            <option>Color</option>
+            <option>All Colors</option>
+        </select>
+    </div>
+    <div class="filter">
+        <select>
+            <option>Features</option>
+            <option>All Features</option>
+        </select>
+    </div>
+    <div class="filter">
+        <select>
+            <option>Price</option>
+            <option>From $0 - $1000</option>
+        </select>
+    </div>
+    <div class="filter">
+        <select>
+            <option>Sort</option>
+            <option>New In</option>
+        </select>
+    </div>
+</div>
+
+<div class="products">
+    {% for product in queryData %}
+    <div class="product-card">
+        <div class="product-image">
+            <div class="color-indicator yellow"></div>
+            {% if product.image %}
+            <img src="{{ url_for('static', filename='static/uploads/' + product.image) }}" alt="Shibuya Totepack">
+            {% else %}
+            <div class="variant-count">No image</div>
+            {% endif %}
+            <!-- <img
+                                    src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                                    alt="Shibuya Totepack"> -->
+        </div>
+        <div class="product-info">
+            <h3>{{product.name}}</h3>
+            <p class="subtitle">{{product.newCategoryName}}</p>
+            <span class="price">${{product.price}}</span>
+        </div>
+        <div class="cartAction">
+            <button class="addProductBtn" @click="addCart(1, 'Shibuya Totepack')" style><i
+                    class='bx bx-cart'></i>&nbsp;Add to
+                Cart</button>
+            <a href="/website/products/details/{{product.id}}">
+                <button class="viewProductBtn" style><i class='bx bx-eye'></i></button>
+            </a>
+        </div>
+
+    </div>
+    <!-- 
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator gray"></div>
+                                <div class="variant-count">+1</div>
+                                <img
+                                    src="https://plus.unsplash.com/premium_photo-1664392147011-2a720f214e01?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D"
+                                    alt="SoFo Backpack City">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Backpack City</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$280.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator green"></div>
+                                <div class="variant-count">+3</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="Gion Backpack Pro">
+                            </div>
+                            <div class="product-info">
+                                <h3>Gion Backpack Pro</h3>
+                                <p class="subtitle">Waterproof Tarpaulin</p>
+                                <span class="price">$140.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://plus.unsplash.com/premium_photo-1679913792906-13ccc5c84d44?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDZ8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1547949003-9792a18a2601?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzB8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1585565804112-f201f68c48b4?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1585565804112-f201f68c48b4?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1610395219791-21b0353e43cb?q=80&w=2669&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <div class="color-indicator black"></div>
+                                <div class="variant-count">+2</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1571689936114-b16146c9570a?q=80&w=2082&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="SoFo Rolltop Backpack X">
+                            </div>
+                            <div class="product-info">
+                                <h3>SoFo Rolltop Backpack X</h3>
+                                <p class="subtitle">Recycled Coated Cotton
+                                    Canvas</p>
+                                <span class="price">$170.00</span>
+                            </div>
+                            <div class="cartAction">
+                                <button class="addProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-cart'></i>&nbsp;Add to
+                                    Cart</button>
+                                <button class="viewProductBtn"
+                                    @click="addCart(1, 'Shibuya Totepack')"
+                                    style><i class='bx bx-eye'></i></button>
+                            </div>
+                        </div> -->
+    {% endfor %}
+</div>

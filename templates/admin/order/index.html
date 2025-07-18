@@ -4,60 +4,60 @@
 
 {% block headerTitle %}Order Management{% endblock %}
 
-{% set createURl = '/administrator/orders/Create' %}
-
-{% block addUrl %}
-<div class="topbarActions">
-    <a href="{{ createURl }}">
-        <button class="search-btn">
-            <i class='bx bx-plus'></i> 
-            <span>Add New</span>
-        </button>
-    </a>
-</div>
-{% endblock %}
-
 {% block extra_css %}
 {% endblock %}
 
 {% block content %}
 <div class="index-container" x-data="dropdown">
-    <div class="header">
-        <div class="header-right">
-            <a href="{{createURl}}" class="header-title">
-                <button class="add-app-btn">
-                    <span class="material-symbols-outlined">add</span>
-                    <span>Add New</span>
-                </button>
-            </a>
-        </a>
-        </div>
-    </div>
     <div class="table">
         <div class="table-wrapper">
             <div class="table-header">
-                <div class="row text left table-row-10">
-                    <span>Account</span>
+                  <div class="row text left table-row-16">
+                    <span>ID</span>
                 </div>
-                <div class="row text left table-row-20">
-                    <span>Account Name</span>
+                 <div class="row text left table-row-16">
+                    <span>User ID</span>
                 </div>
-                <div class="row text left table-row-40">
-                    <span>Description</span>
+                <!-- <div class="row text left table-row-16">
+                    <span>Order ID</span>
+                </div> -->
+                <div class="row text left table-row-16">
+                    <span>Order Date</span>
+                </div>
+               
+                 <div class="row text left table-row-16">
+                    <span>Payment</span>
+                </div>
+                 <!-- <div class="row text left table-row-16">
+                    <span>Expire Date</span>
+                </div> -->
+                 <div class="row text left table-row-16">
+                    <span>Total Price</span>
+                </div>
+                 <div class="row text left table-row-16">
+                    <span>Action</span>
                 </div>
             </div>
             <div class="table-body">
-                {% if recent_orders %}
-                {% for order in recent_orders %}
+                {% if orders %}
+                {% for order in orders %}
+                
                 <div class="column">
-                    <div class="row text left table-row-10">
-                        <span>{{ order.id or '309015' }}</span>
+                    <div class="row text left table-row-16">
+                       
+                        <span>{{ order.id}}</span>
                     </div>
-                    <div class="row text left table-row-20">
-                        <span>{{ order.name or 'Approved Claims Payable' }}</span>
+                    <div class="row text left table-row-16">
+                        <span>{{ order.user_id }}</span>
                     </div>
-                    <div class="row text left table-row-40">
-                        <span>{{ order.description or 'Pay for : Unnamed 193ToCHAO VANNYI#A01PA002504753' }}</span>
+                    <div class="row text left table-row-16">
+                        <span>{{ order.created_at}}</span>
+                    </div>
+                    <div class="row text left table-row-16">
+                        <span>{{ order.paymentMethod}}</span>
+                    </div>
+                    <div class="row text left table-row-16">
+                        <span>{{ order.total_price}}</span>
                     </div>
                     <div class="row text left table-row-5">
                         <div class="dropdown" style="position: relative;">
@@ -65,7 +65,7 @@
                                     type="button"
                                     @click="toggleDropdown('menu-{{ loop.index }}')"
                                     :class="{ 'active': isOpen('menu-{{ loop.index }}') }">
-                                <i class="material-symbols-outlined">more_vert</i>
+                                <i class='bx  bx-dots-vertical' style="font-size: 19px;"></i> 
                             </button>
                             <ul class="tb-dropdown-menu" 
                                 x-show="isOpen('menu-{{ loop.index }}')"
@@ -76,31 +76,49 @@
                                 x-transition:leave-start="transform opacity-100 scale-100"
                                 x-transition:leave-end="transform opacity-0 scale-95"
                                 style="display: none;">
-                                <li>
+                                <!-- <li>
                                     <button class="dropdown-item" type="button"
                                         @click="showDeleteConfirmation('{{ order.name or ('Order #' ~ loop.index) }}')">
-                                        <i class="material-symbols-outlined">delete</i>
+                                        <i class="bx bx-trash"></i>
                                         <span>Delete</span>
                                     </button>
                                 </li>
                                 <li>
                                     <button class="dropdown-item" type="button"
                                         @click="handleEdit('{{ order.id or loop.index }}')">
-                                        <i class="material-symbols-outlined">edit</i>
+                                        <i class="bx bx-edit"></i>
                                         <span>Edit</span>
                                     </button>
+                                </li> -->
+                                <li>
+                                    <!-- <a href="{{ url_for('order_bp.orders_view') }}">
+                                    <button class="dropdown-item" type="button">
+                                        <i class='bx bx-eye'></i>
+                                        <span style="padding-right: 0;">View Detail</span>
+                                    </button>
+                                    </a> -->
+                                       <a href="/administrator/orders/orderDetail/{{order.id}}">
+                                    <button class="dropdown-item" type="button">
+                                        <i class='bx bx-eye'></i>
+                                        <span style="padding-right: 0;">View Detail</span>
+                                    </button>
+                                    </a>
                                 </li>
+                               
                             </ul>
                         </div>
                     </div>
                 </div>
+        
+                
+            
                 {% endfor %}
                 {% else %}
-                <div class="column">
-                    <div class="row text left table-row-10 empty-row">
+               <img src="{{ url_for('static', filename='assets/111.jpg') }}" alt="No orders">
+
+               
                         <span>No recent orders found.</span>
-                    </div>
-                </div>
+                    
                 {% endif %}
             </div>
         </div>    </div>
@@ -108,19 +126,7 @@
    
     
     <!-- Add test content to make page scrollable for testing -->
-    <div style="margin-top: 50px; background: #f9f9f9; border-radius: 8px;">
-        <h3>Test Scroll Content</h3>
-        <p>This is test content to make the page scrollable. Scroll down to see the topbar color changes.</p>
-        
-        <!-- Repeat content to create scroll -->
-        {% for i in range(20) %}
-        <div style="margin: 20px 0; padding: 15px; background: white; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-            <h4>Test Section {{ i + 1 }}</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        {% endfor %}
-    </div>
+    
 </div>
 
 <!-- Include Delete Dialog Component -->

@@ -1,0 +1,441 @@
+{% extends 'web/layout.html' %}
+ 
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .left-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        /* Left Panel - Package Info */
+        .package-info .pkg-id {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .package-info .status-shipped {
+            background-color: #e0ffe0;
+            color: #28a745;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .package-info .section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .package-info .section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .package-info .section h3 {
+            font-size: 14px;
+            color: #888;
+            margin-top: 0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .package-info .section p {
+            margin: 4px 0;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .package-info .section p strong {
+            color: #333;
+        }
+
+        .package-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-items: baseline;
+        }
+
+        .package-details h3 {
+            grid-column: span 2;
+        }
+
+        /* Item Table */
+        .item-table {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .item-table .table-header,
+        .item-table .table-row {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .item-table .table-header {
+            background-color: #f9f9f9;
+            font-weight: 500;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .item-table .table-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Define specific flex values for each column */
+        .item-table .item-name-col,
+        .item-table .warehouse-col,
+        .item-table .product-id-col,
+        .item-table .image-col {
+            padding: 12px 10px;
+            flex: 1;
+            min-width: 60px;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* All changes are in these two classes below */
+        .item-table .qty-col,
+        .item-table .price-col {
+            text-align: left; /* Changed from 'right' to 'left' */
+            min-width: 90px;
+        }
+        
+        .item-table .price-col {
+            font-size: 1.2rem;
+            font-weight: 700;
+            /* The color is not changed, it remains the default value */
+        }
+
+        .item-table .image-col {
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .item-table .product-name-col {
+            padding: 12px 15px;
+            flex: 2.5;
+            color: #333;
+            min-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .item-table .category-name-col {
+            padding: 12px 15px;
+            flex: 2;
+            color: #333;
+            min-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .item-table .image-col img {
+            max-width: 50px;
+            max-height: 50px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
+        /* Right Panel - Payment Info */
+        .payment-info .shp-id {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-info .shp-id .icon {
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .payment-info .shipped-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .payment-details .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .payment-details .label {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .payment-details .value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .delete-button {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 0;
+            text-align: left;
+            display: block;
+            font-weight: 500;
+        }
+
+        .delete-button:hover {
+            text-decoration: underline;
+        }
+
+        /* Shipment Timeline */
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 2px;
+        }
+
+        .timeline-description {
+            font-size: 15px;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .timeline-description strong {
+            font-weight: 500;
+        }
+
+        .timeline-location {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .show-less-button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+            padding: 0;
+            text-align: left;
+            display: block;
+            font-weight: 500;
+        }
+
+        .show-less-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+{%endblock %}
+   
+{% block content %}
+   
+ 
+    <div class="container">
+        <div class="left-panel">
+            <div class="card package-info">
+                <div class="card-header">
+                    <h2>Order Details</h2>
+                </div>
+                <div class="card-content">
+                    <div class="item-table">
+                        <div class="table-header">
+                            <div class="item-name-col">User ID</div>
+                            <div class="warehouse-col">Order ID</div>
+                            <div class="product-id-col">Product ID</div> <div class="product-name-col">Product Name</div>
+                            <div class="qty-col">Qty</div> <div class="price-col">Price</div>
+                            <div class="image-col">Image</div>
+                            <div class="category-name-col">Category Name</div>
+                        </div>
+
+                        {% for order in orderDetail %}
+                        <div class="table-row">
+                            <div class="item-name-col">{{order.id}}</div>
+                            <div class="warehouse-col">{{order.order_id}}</div>
+                            <div class="product-id-col">{{order.product_id}}</div>
+                            <div class="product-name-col">{{order.product_name}}</div>
+                            <div class="qty-col">{{order.qty}}</div>
+                            <div class="price-col" style="color: #817d7d;">${{order.price}}</div>
+                            <div class="image-col">
+                                {% if order.image %}
+                                <img src="{{ url_for('static', filename='static/uploads/' + order.image) }}" alt="Product Image">
+                                {% else %}
+                                <span>No Image</span>
+                                {% endif %}
+                            </div>
+                            <div class="category-name-col">{{order.categoryName}}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="card payment-info">
+                <div class="card-header">
+                    <h2>Payment</h2>
+                </div>
+                <div class="card-content">
+                    <p class="shp-id"><img src="/assets/image.png" alt="shipping icon" class="icon"> SHP-0000007</p>
+                    <p class="shipped-date">Shipped on 27/3/2019</p>
+
+                    <div class="payment-details">
+                        <div class="detail-row">
+                            <span class="label">CARRIER</span>
+                            <span class="value">DHL</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">SHIPPING CHARGE</span>
+                            <span class="value">$200</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">TRACKING#</span>
+                            <span class="value">123213123</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">STATUS</span>
+                            <span class="value">Shipped</span>
+                        </div>
+                    </div>
+                    <button class="delete-button">Delete Shipment</button>
+                </div>
+            </div>
+
+            <div class="card shipment-timeline">
+                <div class="card-header">
+                    <h2>Shipment Timeline</h2>
+                </div>
+                <div class="card-content">
+                    <div class="timeline-item">
+                        <img src="/assets/car1.avif" alt="clock icon" class="timeline-icon">
+                        <div class="timeline-content">
+                            <p class="timeline-time">5:23 PM, Monday, 03 June, 2019</p>
+                            <p class="timeline-description"><strong>Delivered</strong> - Delivered to recipient at FedEx Facility</p>
+                            <p class="timeline-location">PUERTO VALLARTA</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <img src="/assets/loc.png" alt="clock icon" class="timeline-icon">
+                        <div class="timeline-content">
+                            <p class="timeline-time">5:23 PM, Monday, 03 June, 2019</p>
+                            <p class="timeline-description"><strong>Ready for recipient pickup</strong> - Package available for pickup at FedEx Facility:</p>
+                            <p class="timeline-location">CARR A TEPIC 5735 LOCAL 39, 40</p>
+                            <p class="timeline-location">PUERTO VALLARTA</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <img src="/assets/car1.avif" alt="dot icon" class="timeline-icon">
+                        <div class="timeline-content">
+                            <p class="timeline-time">5:23 PM, Monday, 03 June, 2019</p>
+                            <p class="timeline-description">Shipment sent to FedEx</p>
+                            <p class="timeline-location">PUERTO VALLARTA</p>
+                        </div>
+                    </div>
+                    <button class="show-less-button">Show Less</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

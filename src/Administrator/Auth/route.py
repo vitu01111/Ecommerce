@@ -28,8 +28,9 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
-def login():
+@auth_bp.route('/login2', methods=['GET', 'POST'])
+def login2():
+    
     try:
         form = LoginForm()
         if form.validate_on_submit():
@@ -39,7 +40,9 @@ def login():
                 session['admin_id'] = admin.id 
                 # You can return the token as JSON, set it as a cookie, or pass to the template
                 flash('Login successful!', 'success')
-                return redirect(url_for('customer_bp.customer_list'))
+                # return redirect(url_for('customer_bp.customer_list'))
+                return redirect(url_for('prdouctt_bp.products_list'))
+
                 # return render_template('admin/customers/index.html', form=form, access_token=access_token)
             else:
                 flash('Invalid email or password.', 'danger')
@@ -47,7 +50,47 @@ def login():
     except Exception as e:
         flash(f'Error checking session: {str(e)}', 'danger')
         return str(e)
-    
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        email = request.form.get('email')
+        if not password or not email:
+            flash('Email and password are required.', 'danger')
+            return redirect(url_for('auth.login'))
+        print(f"Email: {email}, Password: {password}")  # Debugging line
+
+        admin = Admin.query.filter_by(email=email).first()
+        if admin and bcrypt.check_password_hash(admin.password, password):
+            access_token = create_access_token(identity=admin.id)
+            session['admin_id'] = admin.id
+            flash('Login successful!', 'success')
+            # You can return the token as JSON, set it as a cookie, or pass to the template
+            # return jsonify(access_token=access_token)
+            return redirect('/administrator/dashboard')
+        
+    return render_template('auth/login.html')
+
+    # try:
+    #     form = LoginForm()
+    #     if form.validate_on_submit():
+    #         admin = Admin.query.filter_by(email=form.email.data).first()
+    #         if admin and admin.check_password(form.password.data):
+    #             access_token = create_access_token(identity=admin.id)
+    #             session['admin_id'] = admin.id 
+    #             # You can return the token as JSON, set it as a cookie, or pass to the template
+    #             flash('Login successful!', 'success')
+    #             # return redirect(url_for('customer_bp.customer_list'))
+    #             return redirect(url_for('prdouctt_bp.products_list'))
+
+    #             # return render_template('admin/customers/index.html', form=form, access_token=access_token)
+    #         else:
+    #             flash('Invalid email or password.', 'danger')
+    #     return render_template('auth/login.html', form=form)
+    # except Exception as e:
+    #     flash(f'Error checking session: {str(e)}', 'danger')
+    #     return str(e)
 
 @auth_bp.route('/logout')
 def logout():

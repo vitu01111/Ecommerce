@@ -1,0 +1,173 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Employee Management{% endblock %}
+
+{% block headerTitle %}Employee Management{% endblock %}
+
+{% set createURl = '/administrator/employee/createForm' %}
+
+{% block addUrl %}
+<div class="topbarActions">
+    <a href="{{ createURl }}">
+        <button class="search-btn">
+            <i class='bx bx-plus'></i>
+            <span>Add New</span>
+        </button>
+    </a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="index-container" x-data="dropdown">
+    <div class="header">
+        <div class="header-right">
+            <a href="{{createURl}}" class="header-title">
+                <button class="add-app-btn">
+                    <span class="material-symbols-outlined">add</span>
+                    <span>Add New</span>
+                </button>
+            </a>
+            </a>
+        </div>
+    </div>
+    <div class="table">
+        <div class="table-wrapper">
+            <div class="table-header">
+                <div class="row text left table-row-10">
+                    <span>ID</span>
+                </div>
+                <div class="row text left table-row-20">
+                    <span>Name</span>
+                </div>
+                <div class="row text left table-row-5">
+                    <span>Action</span>
+                </div>
+            </div>
+            <div class="table-body">
+                {% if data %}
+                {% for item in data %}
+                <div class="column">
+                    <div class="row text left table-row-10">
+                        <span>{{ item.id }}</span>
+                    </div>
+                    <div class="row text left table-row-20">
+                        <span>{{ item.name }}</span>
+                    </div>
+                    <div class="row text left table-row-5">
+                        <div class="dropdown" style="position: relative;">
+                            <button class="action-btn" type="button" @click="toggleDropdown('menu-{{ loop.index }}')"
+                                :class="{ 'active': isOpen('menu-{{ loop.index }}') }">
+                                <i class='bx  bx-dots-vertical' style="font-size: 19px;"></i>
+                            </button>
+                            <ul class="tb-dropdown-menu" x-show="isOpen('menu-{{ loop.index }}')"
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="transform opacity-0 scale-95"
+                                x-transition:enter-end="transform opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="transform opacity-100 scale-100"
+                                x-transition:leave-end="transform opacity-0 scale-95" style="display: none;">
+
+                                <li>
+                                    <a href="/administrator/employee/delete/{{item.id}}">
+                                        <button class="dropdown-item" type="button">
+                                            <i class="bx bx-trash"></i>
+                                            <span>Delete</span>
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/administrator/employee/editForm/{{item.id}}">
+                                        <button class="dropdown-item" type="button">
+                                            <i class="bx bx-edit"></i>
+                                            <span>Edit</span>
+                                        </button>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <button class="dropdown-item" type="button">
+                                            <i class='bx bx-eye'></i>
+                                            <span style="padding-right: 0;">View Detail</span>
+                                        </button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="column">
+                    <div class="row text left table-row-10 empty-row">
+                        <span>No recent orders found.</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdown', () => ({
+            openDropdown: null,
+            showDeleteDialog: false,
+            itemToDelete: null,
+            dialogConfig: {},
+
+            init() {
+                console.log('Alpine dropdown component initialized!');
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.dropdown')) {
+                        this.openDropdown = null;
+                    }
+                });
+            },
+
+            toggleDropdown(menuId) {
+                this.openDropdown = this.openDropdown === menuId ? null : menuId;
+            },
+
+            isOpen(menuId) {
+                return this.openDropdown === menuId;
+            },
+
+            // Generic dialog method that accepts configuration
+            showDialog(config) {
+                this.dialogConfig = config;
+                this.itemToDelete = { id: config.itemId, name: config.itemName };
+                this.showDeleteDialog = true;
+                this.openDropdown = null;
+            },
+
+            // Specific delete confirmation method
+            showDeleteConfirmation(orderId, orderName) {
+                SelectOption({
+                    title: 'Confirm Deletion',
+                    description: `Are you sure you want to delete ${orderName}?`,
+                    icon: 'delete',
+                    itemId: orderId,
+                    itemName: orderName,
+                    afterClose: (res) => {
+                        console.log("52525252@@@!11");
+                        if (res) {
+                            this.$dispatch('order-deleted', { id: orderId });
+                        }
+                    }
+                });
+            },
+        }))
+    })
+</script>
+{% endblock %}

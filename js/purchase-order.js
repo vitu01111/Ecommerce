@@ -124,4 +124,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize order summary
     updateOrderSummary();
+    console.log('fjhfsljf')
 });

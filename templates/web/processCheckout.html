@@ -1,0 +1,389 @@
+{% extends 'web/layout.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/web/processCheckout.css') }}">
+{%endblock %}
+
+
+{% block content %}
+
+
+<div class="process-checkout-lyout" x-data="XProcessCheckout">
+    <div class="process-checkout-header"></div>
+
+    <div class="process-checkout-body">
+        <div class="process-checkout-left">
+            <h1 style="font-size: 25px;font-weight: 550;margin-bottom: 15px;">Process CheckOut</h1>
+            <template x-for="item in cart">
+            <div class="ProChe-item">
+                <div class="body">
+                    <div class="ProChe-item-image">
+                        <img :src="'../../static/uploads/' + item.image"
+                            alt="Product Image">
+                    </div>
+                    <div class="ProChe-item-details">
+                        <p style="font-weight: 500;font-size: 19px;" x-text="item.name"></p>
+                        <p x-text="item.categoryName"></p>
+                        <div>
+                            <span class="colorGray">Size: </span><span class="fontW600">XL</span>
+                            <span>/</span>
+                            <span class="colorGray">Color: </span><span class="fontW600">Black</span>
+                        </div>
+                        <div style="font-size: 19px;" class="fontW600">$<span x-text="item.price"></span></div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div
+                        style="margin-top: 10px;display: flex;justify-content: space-between;width: 100%;align-items: center;">
+                        <div class="cartConQty">
+                            <button @click="updateCartItemQty(item.id,'-')">-</button>
+                            <input type="number" :value="item.qty" min="1">
+                            <button @click="updateCartItemQty(item.id,'+')">+</button>
+                        </div>
+                        <div style="font-weight: 600;">
+                            <button type="button" class="ProChe-Remove" @click="deleteCartItem(item.id)"><i class="bx bx-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </template>
+        </div>
+        <div class="process-checkout-right">
+            <!-- Order Tracking -->
+            <div class="ProChe-track-ship ProChe-ItemBox">
+                <div class="ProTitle">Order Tracking</div>
+                <div style="margin-bottom: 20px;color: gray;font-size: 13px;">This Order Is Ready to shipping Please
+                    click the to
+                    ship button.</div>
+                <div class="ProChe-track-buttons">
+                    <button class="ProChe-track">Track Order</button>
+                    <button class="ProChe-ship">Ship</button>
+                </div>
+                <div class="ProChe-track-activity">
+                    <div class="ProChe-track-activity-icon active">
+                        <i class='bx bx-cube'></i>
+                        <div class="ProChe-track-activity-label">
+                            <label class="active">Placed</label>
+                            <label>2023/03/15</label>
+                            <label>10:00 AM</label>
+                        </div>
+                    </div>
+                    <div class="ProChe-track-activity-line"></div>
+                    <div class="ProChe-track-activity-icon">
+                        <i class='bx  bx-truck'></i>
+                        <div class="ProChe-track-activity-label">
+                            <label>Placed</label>
+                            <label>2023/03/15</label>
+                            <label>10:00 AM</label>
+                        </div>
+                    </div>
+                    <div class="ProChe-track-activity-line"></div>
+                    <div class="ProChe-track-activity-icon">
+                        <i class='bx bx-donate-blood'></i>
+                        <div class="ProChe-track-activity-label">
+                            <label>Shipped</label>
+                            <label>2023/03/16</label>
+                            <label>11:00 AM</label>
+                        </div>
+                    </div>
+                    <div class="ProChe-track-activity-line"></div>
+                    <div class="ProChe-track-activity-icon">
+                        <i class='bx  bx-receipt'></i>
+                        <div class="ProChe-track-activity-label">
+                            <label>Delivered</label>
+                            <label>2023/03/17</label>
+                            <label>12:00 PM</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Send to Delivery Company -->
+            <div class="ProChe-track-ship ProChe-ItemBox">
+                <div class="ProTitle">Send to Delivery Company</div>
+                <div style="display: flex;flex-direction: column;grid-gap: 10px;">
+                    <div class="payment-method">
+                        <input type="radio" id="credit-card" name="payment-method" value="Payment By Cash" x-model="paymentMethod">
+                        <label for="credit-card">
+                            <div class="method-info">
+                                <img src="../../assets/cash.avif" alt="ABA Bank Logo">
+                                <!-- <span>Pay with Cash</span> -->
+                            </div>
+                            <span class="method-description">Pay with Cash</span>
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="paypal" name="payment-method" value="ABA" x-model="paymentMethod">
+                        <label for="paypal">
+                            <div class="method-info">
+                                <img src="../../assets/ABA.jpg" alt="ABA Bank Logo">
+                                <!-- <span>ABA Bank</span> -->
+                            </div>
+                            <span class="method-description">Pay with your ABA Bank</span>
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="acleda" name="payment-method" value="acleda" x-model="paymentMethod"> 
+                        <label for="acleda">
+                            <div class="method-info">
+                                <img src="../../assets/acleda.jpg" alt="Acleda Bank Logo">
+                            </div>
+                            <span class="method-description">Pay with your Acleda Bank</span>
+                        </label>
+                    </div>
+                    <!-- <div class="payment-method">
+                        <input type="radio" id="wing" name="payment-method" value="wing">
+                        <label for="wing">
+                            <div class="method-info">
+                                <img src="../../assets/wing.png" alt="Wing Logo">
+                            </div>
+                            <span class="method-description">Pay with your Wing</span>
+                        </label>
+                    </div> -->
+                </div>
+
+            </div>
+
+            <!-- Order Summary -->
+            <div class="ProChe-track-ship ProChe-ItemBox">
+                <div class="ProTitle">Order Summary</div>
+                <!-- <div style="display: flex;flex-wrap: wrap;grid-gap: 15px 26px;">
+                    <div class="ProChe-Control-input">
+                        <label>Discount (%)</label>
+                        <div class="ProChe-input">
+                            <i class='bx  bx-percentage'></i>
+                            <input type="number" value="0" min="0" max="100" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="ProChe-Control-input">
+                        <label>Amount</label>
+                        <div class="ProChe-input">
+                            <i class='bx bx-dollar'></i>
+                            <input type="number" value="0" min="0" max="100" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="ProChe-Control-input">
+                        <label>Vat/ Tax (%)</label>
+                        <div class="ProChe-input">
+                            <i class='bx  bx-percentage'></i>
+                            <input type="number" value="0" min="0" max="100" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="ProChe-Control-input">
+                        <label>Amount</label>
+                        <div class="ProChe-input">
+                            <i class='bx bx-dollar'></i>
+                            <input type="number" value="0" min="0" max="100" placeholder="0">
+                        </div>
+                    </div>
+                </div> -->
+                <div style="margin-top: 25px;">
+                    <div class="ProChe-Sum-Item">
+                        <span class="ProChe-Sum-Item-label">Subtotal</span>
+                        <span class="ProChe-Sum-Item-value">$<span x-text="totalPrice"></span></span>
+                    </div>
+                    <div class="ProChe-Sum-Item">
+                        <span class="ProChe-Sum-Item-label">Shipping</span>
+                        <span class="ProChe-Sum-Item-value">$0.00</span>
+                    </div>
+                    <div class="ProChe-Sum-Item">
+                        <span class="ProChe-Sum-Item-label">Tax</span>
+                        <span class="ProChe-Sum-Item-value">$0.00</span>
+                    </div>
+                    <div class="ProChe-Sum-Item ProChe-Sum-Total">
+                        <span class="ProChe-Sum-Item-label">Total</span>
+                        <span class="ProChe-Sum-Item-value">$ <span x-text="totalPrice"></span></span>
+                    </div>
+                </div>
+            </div>
+     <!-- @click="showDialogConfirm = true"> -->
+
+            <div>
+                <button type="button" class="ProChe-Checkout" style="    height: 50px;
+    width: 100%;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 10px;" @click="showDialogConfirm = true"> 
+       
+                   <span>Submit Order</span><i class='bx bx-send' style="font-size: 20px;"></i></button>
+             
+            
+                </div>
+      
+
+        </div>
+    </div>
+    <!-- PopUp Verify -->
+    <template x-if="showDialogConfirm">
+        <div>
+            <div style="position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    background: #00000038;
+    display: flex;
+    justify-content: center;
+    align-items: center;">
+                <div style="    width: 265px;
+    background: #fff;
+    min-height: 335px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    text-align: center;">
+                    <i class='bx  bx-help-circle' style="font-size: 75px;margin-bottom: 25px;color: #FFC107;"></i>
+                    <!-- <h2>Verify Your Order</h2> -->
+                    <p style="    color: #3b3a3a;
+    font-size: 13px;
+    font-weight: 600;">Are you sure you want to proceed with your order?</p>
+                    <div style="    margin-top: 25px;
+    display: flex;
+    grid-gap: 15px;
+    flex-direction: column;
+    width: 100%;">
+                    <button class="ProChe-Verify" style="    width: 100%;
+    height: 43px;
+    border-radius: 30px;
+    border: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+    justify-content: center;" @click="submitOrder">
+                            <template x-if="loadingSubmit">
+                                <div class="loader"></div>
+                            </template>
+                            <span>Ok, Confirm</span>
+                        </button>
+                        <button class="ProChe-Cancel"
+                            style="width: 100%;border:none;background:none;color:#00000099;font-size: 13px;"
+                            @click="showDialogConfirm = false">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+
+
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('XProcessCheckout', () => ({
+            active: false,
+            showDialogConfirm: false,
+            totalPrice: 0,
+            loadingSubmit:false,
+            paymentMethod:'',
+            init() {
+                console.log(this.cart,'cartttt@@');
+
+                // Initialize totalPrice
+                this.sumTotalPrice(this.cart);
+            },
+            deleteCartItem(productID) {
+                console.log("productID", productID);
+                // Find the index of the item with the specified productID
+                const itemIndex = this.cart.findIndex(item => item.id === productID);
+
+                if (itemIndex !== -1) {
+                    // Remove the item from the cart
+                    this.cart.splice(itemIndex, 1);
+
+                    // Save the updated cart back to localStorage
+                    localStorage.setItem('cart', JSON.stringify(this.cart));
+
+                    console.log('Item deleted. Updated cart:', this.cart);
+                } else {
+                    console.log('Item not found in cart:', productID);
+                }
+
+                // add realtime with click update qty each product
+                this.sumTotalPrice(this.cart);
+
+            },
+            updateCartItemQty(productID, action) {
+                console.log("productID", productID);
+                // Find the item with the specified productID
+                const item = this.cart.find(item => item.id === productID);
+                if (action === '-') {
+                    if (item && item.qty > 1) {
+                        item.qty -= 1; // Decrease quantity by 1
+                    }
+                } else if (action === '+') {
+                    if (item) {
+                        item.qty += 1; // Increase quantity by 1
+                    }
+                }
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+
+                // add realtime with click update qty each product
+                this.sumTotalPrice(this.cart);
+            },
+            sumTotalPrice(cart=[]) {
+                this.totalPrice = 0; // Reset totalPrice before calculation
+                if (cart.length > 0) {
+                    for (const item of cart) {
+                        this.totalPrice += item.price * item.qty;
+                    }
+                }
+            },
+            submitOrder(){
+                this.loadingSubmit = true;
+                // Simulate an API call to submit the order
+                dataItem = [];
+                for (const item of this.cart) {
+                    dataItem.push({
+                        id: item.id,
+                        name: item.name,
+                        image: item.image,
+                        qty: item.qty,
+                        price: item.price,
+                        categoryName: item.categoryName
+                    });
+                }
+                setTimeout(() => {
+                    fetch('/api/order/submitOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            items: dataItem,
+                            paymentMethod:this.paymentMethod,
+                            totalPrice: this.totalPrice
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == true){
+                            // Clear the cart after successful submission
+                            this.cart = [];
+                            localStorage.setItem('cart', JSON.stringify(this.cart));
+                            this.showDialogConfirm = false; // Close the confirmation dialog
+                            window.location.href = '/confirm/'+data.orderID; // Redirect to order page
+                        }
+                        this.loadingSubmit = false;
+                        console.log('Order submitted successfully:', data);
+                    })
+                    .catch(error => {
+                        this.loadingSubmit = false;
+                        console.error('Error submitting order:', error);
+                    });
+                }, 700);
+                
+            }
+        }));
+    });
+</script>
+{% endblock %}

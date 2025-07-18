@@ -1,0 +1,111 @@
+<div class="header" style="justify-content: center;padding: 0;">
+    <div style="width: 100%;display: flex;align-items: center;justify-content: space-between;max-width: 1200px;"
+        class="header-main">
+        <a href="/" class="logo">
+            <div style="display: flex;align-items: center;">
+                <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo" style="height: 40px;">
+                <div style="margin-left: 13px;">
+                    <p style="font-size: 17px;font-weight: 600;">Ecommerce</p>
+                    <p style="font-size: 10px;font-weight: 400;color: gray;">Get
+                        Inspired</p>
+                </div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/product">Product</a>
+            <a href="/sport">Sport</a>
+            <a href="/contact">Contact</a>
+            <!-- <a href="#">Privacy Policy</a>
+            <a href="#">Teams of Service</a> -->
+
+            <!-- <a href="#">Collections</a>
+                        <a href="#">Explore</a> -->
+            <a href="#">...</a>
+        </div>
+        <div class="header-right">
+
+            <!-- <button @click="showAddCartConfirmation(1, 'Cart 2')"
+                            style="border: none;background: none;cursor: pointer;">🛒
+                            Cart <span
+                                x-text="countCart>0 ? countCart :'' "></span></button> -->
+            <!-- <a href="#">👤 My account</a> -->
+            {% if not session.get('name') %}
+            <a href="/website/login">
+                <button type="button" class="btnAuth">
+                    <i class='bx  bx-arrow-out-right-square-half'></i>
+                    <span>Login</span>
+                </button>
+            </a>
+            <a href="/website/register/register">
+                <button type="button" class="btnAuth">
+                    <i class='bx  bx-user'></i>
+                    <span>Register</span>
+                </button>
+            </a>
+            {% else %}
+            <button @click="showAddCartConfirmation(1, 'Cart 2')"
+                style="background: #3f5cfd;border: none;width: 35px;height: 35px;position: relative;border-radius: 50%;color: #fff;display: flex;align-items: center;justify-content: center;cursor: pointer;">
+                <!-- <i class='bx bx-shopping-bag'></i> -->
+                <i class='bx bxs-shopping-bag' style='color:#fff;font-size: 17px;'></i>
+                <template x-if="countCart > 0">
+                    <div class="cartCount">
+                        <span x-text="countCart"></span>
+                    </div>
+                </template>
+            </button>
+            <div style="position: relative;" @click.away="profileToggle = false"
+                :class="profileToggle ? 'headerProfileGp':''" x-transition.scale>
+                <button type="button" class="headerProfile" @click="profileToggle = !profileToggle">
+                    <img src="https://media.istockphoto.com/id/998851254/photo/unshaven-but-still-as-smooth-as-ever.jpg?s=612x612&w=0&k=20&c=9QYHshZgo1UXm8GZ6yBsbG4XPwxQneZE7w4WtmJldh0="
+                        alt="User" style="    width: 35px;height: 35px;border-radius: 50%;object-fit: cover;">
+                    <div style="text-decoration: none;color: #333;font-size: 14px;font-weight: 600;padding-right: 30px;">
+                        {{session.get('name')}}</div>
+                    <i class='bx bx-chevron-down' style='color:#000;font-size: 21px;'></i>
+                </button>
+                <div style="position: absolute;width: 100%;border-radius: 0 0 20px 20px;background: #fff;box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);"
+                    x-show="profileToggle" x-transition.scale>
+                    <div style="padding: 10px 0 15px 0;">
+                        <a href="/profile"
+                            style="display: flex;align-items: center;padding: 10px 20px;color: #333;font-size: 14px;font-weight: 500;text-decoration: none;">
+                            <i class='bx bx-user' style='color:#000;font-size: 20px;margin-right: 10px;'></i>
+                            Profile
+                        </a>
+                        <a href="/historyUser/{{session.get('user_id')}}"
+                            style="display: flex;align-items: center;padding: 10px 20px;color: #333;font-size: 14px;font-weight: 500;text-decoration: none;">
+                            <i class='bx bx-receipt' style='color:#000;font-size: 20px;margin-right: 10px;'></i>
+                            History Orders
+                        </a>
+                        <a href="/website/login/logout"
+                            style="display: flex;align-items: center;padding: 10px 20px;color: #333;font-size: 14px;font-weight: 500;text-decoration: none;">
+                            <i class='bx bx-log-out' style='color:#000;font-size: 20px;margin-right: 10px;'></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-scroll-down">
+        <a href="#"><i class='bx bx-arrow-in-up-right-circle'></i>&nbsp;Product</a>
+        <button @click="showAddCartConfirmation(1, 'Cart 2')" style="border: none;background: none;cursor: pointer;">
+            <i class='bx bx-cart'></i>
+            <span>Cart</span>
+            <div style="display: flex;position: relative;">
+                {% if session.get('user_id') %}
+                <span x-text="countCart>0 ? countCart :'' " :class="countCart>0 ? 'countCart' :''"></span>
+                {% endif %}
+                <template x-if="countCart>99">
+                    <label
+                        style="position: absolute;right: -3px;top: -3px;font-weight: 600;color: #fff;width: 11px;height: 11px;border-radius: 50%;display: flex;align-items: center;justify-content: center;">+</label>
+                </template>
+            </div>
+        </button>
+        <a href="#">
+            <i class='bx bx-user'></i>
+            <span>My account</span>
+        </a>
+    </div>
+
+</div>

@@ -1,0 +1,281 @@
+{% extends 'web/layout.html' %}
+
+
+{% block extra_css %}
+ <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            font-family: 'Battambang', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #f7f7f7;
+        }
+        .navbar {
+            background: #43c6ac;
+            box-shadow: 0 2px 12px rgba(67,198,172,0.10);
+            padding: 0.5rem 0;
+        }
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-brand {
+            color: #fff;
+            font-size: 2rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #222; }
+        .container-profile {
+            flex: 1 0 auto;
+            width: 80%;
+            margin: 2rem auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(67,198,172,0.10);
+            padding: 2rem;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .profile-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #222;
+        }
+        .back {
+            text-decoration: none;
+            color: gray;
+            font-size: 1.3rem;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .hr {
+            width: 100%;
+            height: 1px;
+            background-color: #333;
+            margin: 30px 0;
+        }
+        .profile_content {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .left {
+            width: 20%;
+        }
+        .left ul {
+            list-style-type: none;
+        }
+        .left ul li a {
+            display: block;
+            padding: 12px 10px;
+            color: #222;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            transition: background 0.2s;
+        }
+        .left ul li a:hover {
+            background: #43c6ac;
+            color: #fff;
+        }
+        .right {
+            width: 80%;
+        }
+        .background {
+            width: 100%;
+            height: 160px;
+            border-radius: 16px;
+            background: linear-gradient(to right, #e8ecf0, #eedfea);
+            margin-bottom: 1.5rem;
+        }
+        .img_center {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .img_profile_left {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #fff;
+            background: #ccc;
+        }
+        .img_profile_left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img_profile {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .img_profile p:first-child {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .img_profile p:last-child {
+            color: #6e6a6a;
+            margin-top: -10px;
+        }
+        .profile-form {
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .profile-form .form-row {
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .profile-form label {
+            width: 20%;
+            font-weight: 500;
+        }
+        .profile-form input,
+        .profile-form textarea {
+            width: 75%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .profile-form textarea {
+            resize: vertical;
+        }
+        .profile-form .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .ProfSaveBtn, .ProfCanBtn {
+            width: 90px;
+            height: 36px;
+            font-size: 1rem;
+            border-radius: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        .ProfSaveBtn {
+            background: #43c6ac;
+            color: #fff;
+        }
+        .ProfCanBtn {
+            background: #eee;
+            color: #333;
+        }
+        .ProfCanBtn:hover {
+            background: #ccc;
+        }
+        .ProfSaveBtn:hover {
+            background: #2d7266;
+        }
+  
+        @media (max-width: 900px) {
+            .container-profile, .footer-content {
+                max-width: 98vw;
+                padding: 1rem;
+            }
+            .profile_content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .left, .right {
+                width: 100%;
+            }
+        }
+    </style>
+{%endblock %}
+
+
+
+
+
+{% block content %}
+   
+ 
+    <div class="container-profile">
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <a href="/" class="back">Back to HomePage</a>
+        </div>
+        <div class="hr"></div>
+        <div class="profile_content">
+            <div class="left">
+                <ul>
+                    <li><a href="#">My details</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Password</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Email</a></li>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="background"></div>
+                <div class="img_center">
+                    <div class="img_profile_left">
+                        <img src="https://static.vecteezy.com/system/resources/previews/048/216/750/non_2x/cartoon-man-avatar-character-male-avatar-profile-free-png.png" alt="image">
+                    </div>
+                    <div class="img_profile">
+                        <p>Profile</p>
+                        <p>Update your photo and personal details</p>
+                    </div>
+                </div>
+                <form method="POST" action="/profile" class="profile-form">
+                    <div class="form-row">
+                        <label>Username</label>
+                        {% if user %}
+                        <input type="text" name="username" value="{{user.username }}">
+                        {%  endif %}
+                    </div>
+                    <!-- Add more fields as needed -->
+                    <div class="form-actions">
+                        <button type="submit" class="ProfSaveBtn">Update</button>
+                        <button type="button" class="ProfCanBtn" onclick="window.location.reload()">Cancel</button>
+                    </div>
+                </form>
+                <form class="profile-form">
+                    <div class="form-row">
+                        <label>New Username</label>
+                        <input type="text" value="{{user.username if user else ''}}">
+                    </div>
+                    <div class="form-row">
+                        <label>Website</label>
+                        <input type="text" value="www.untitledui.com">
+                    </div>
+                    <div class="form-row">
+                        <label>Location</label>
+                        <input type="text" value="City, Country">
+                    </div>
+                    <div class="form-row">
+                        <label>Bio</label>
+                        <textarea rows="4"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

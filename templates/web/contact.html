@@ -1,0 +1,443 @@
+{% extends 'web/layout.html' %}
+
+{% block extra_css %}
+<style>
+    /* General body styling for better font rendering and background */
+    body {
+        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8fafc; /* Light gray background */
+    }
+
+    .contact-section,
+    .faq-section,
+    .contact-info-section,
+    .map-section {
+        max-width: 960px; /* Wider for more content */
+        margin: 3em auto;
+        background-color: white;
+        padding: 2.5em 3em; /* More padding */
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-section:hover,
+    .faq-section:hover,
+    .contact-info-section:hover,
+    .map-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    h1, h2 {
+        font-size: 2.5em; /* Larger headings */
+        margin-bottom: 0.8em;
+        color: #1e293b;
+        text-align: center; /* Center headings */
+        letter-spacing: -0.02em;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-top: 1.5em;
+        margin-bottom: 0.8em;
+    }
+
+    .p {
+        text-align: center;
+        margin-bottom: 1.5em;
+        color: #555;
+        font-size: 1.1em;
+    }
+     
+
+    /* Contact Form Styling */
+    .contact-section form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em; /* Slightly more space between form elements */
+        max-width: 600px; /* Constrain form width */
+        margin: 0 auto;
+    }
+
+    .contact-section label {
+        font-weight: 600; /* Bolder label */
+        color: #333;
+        margin-bottom: 0.2em; /* Closer to input */
+        display: block; /* Ensures label takes full width */
+    }
+
+    .contact-section input,
+    .contact-section textarea {
+        padding: 1em; /* More padding */
+        border: 1px solid #d1d5db; /* Lighter border */
+        border-radius: 8px;
+        font-size: 1.05em;
+        width: 100%; /* Ensure full width */
+        box-sizing: border-box; /* Include padding in width */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-section input:focus,
+    .contact-section textarea:focus {
+        border-color: #3b82f6; /* Blue border on focus */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Light blue shadow on focus */
+        outline: none;
+    }
+
+    .contact-section textarea {
+        resize: vertical; /* Allow vertical resizing */
+        min-height: 120px;
+    }
+
+    .contact-section button {
+        padding: 1em 1.5em;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        align-self: flex-start; /* Align button to the start */
+        margin-top: 1em; /* Space above button */
+    }
+
+    .contact-section button:hover {
+        background-color: #2563eb;
+        transform: translateY(-2px);
+    }
+
+    .contact-section button:active {
+        transform: translateY(0);
+    }
+
+    /* Form success message */
+    #form-message {
+        text-align: center;
+        margin-top: 1.5em;
+        font-size: 1.1em;
+        padding: 1em;
+        border-radius: 8px;
+        display: none; /* Hidden by default */
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    #form-message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    #form-message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* Contact Info Section */
+    .contact-info-section {
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        justify-content: center;
+        gap: 2em; /* Space between info blocks */
+    }
+
+    .contact-info-item {
+        flex: 1 1 280px; /* Flex basis for items */
+        padding: 1.5em;
+        border-radius: 10px;
+        background-color: #f0f4f8; /* Lighter background */
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .contact-info-item h3 {
+        color: #1e293b;
+        font-size: 1.4em;
+        margin-bottom: 0.8em;
+    }
+
+    .contact-info-item p,
+    .contact-info-item a {
+        font-size: 1.1em;
+        color: #555;
+        text-decoration: none;
+        display: block; /* Ensure links take full width for clickability */
+        margin-bottom: 0.5em;
+    }
+
+    .contact-info-item a:hover {
+        color: #3b82f6;
+        text-decoration: underline;
+    }
+
+    /* Social Media Icons */
+    .social-links {
+        margin-top: 1.5em;
+        display: flex;
+        justify-content: center;
+        gap: 1.5em;
+    }
+
+    .social-links a {
+        font-size: 1.8em; /* Larger icons */
+        color: #64748b;
+        transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .social-links a:hover {
+        color: #3b82f6; /* Blue on hover */
+        transform: translateY(-3px);
+    }
+
+    /* Map Section */
+    .map-section {
+        padding: 0; /* Remove padding for map iframe */
+        overflow: hidden; /* Hide potential scrollbars from iframe */
+    }
+
+    .map-section h2 {
+        padding: 2em 0 1em; /* Space for heading inside section */
+        margin: 0;
+    }
+
+    .map-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .map-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0; /* Remove iframe border */
+        border-radius: 0 0 12px 12px; /* Match section border radius for bottom */
+    }
+
+    /* FAQ Section */
+    .faq-section {
+        padding-top: 0; /* Adjust for internal heading */
+    }
+
+    .faq-item {
+        margin-bottom: 1.5em;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1em;
+    }
+
+    .faq-item:last-child {
+        border-bottom: none;
+    }
+
+    .faq-question {
+        font-weight: 600;
+        font-size: 1.2em;
+        color: #1e293b;
+        cursor: pointer;
+        padding: 0.8em 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .faq-question::after {
+        content: '+';
+        font-size: 1.5em;
+        margin-left: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-question.active::after {
+        content: '-';
+        transform: rotate(180deg); /* Rotate for minus sign */
+    }
+
+    .faq-answer {
+        font-size: 1em;
+        color: #555;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        padding-left: 1em; /* Indent answer */
+    }
+
+    .faq-answer.open {
+        max-height: 200px; /* Adjust based on max content height */
+        padding-top: 0.5em;
+        padding-bottom: 1em;
+    }
+
+
+    /* Footer Styling */
+    footer {
+        text-align: center;
+        padding: 2em;
+        background-color: #e2e8f0;
+        margin-top: 4em;
+        color: #4a5568;
+        font-size: 0.95em;
+        border-top: 1px solid #cbd5e1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .contact-section,
+        .faq-section,
+        .contact-info-section,
+        .map-section {
+            margin: 2em 1em;
+            padding: 2em 1.5em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.8em;
+        }
+
+        .contact-info-item {
+            flex-basis: 100%; /* Stack items on small screens */
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <h1>Get in Touch with Us</h1>
+    <p class="text" style="margin-left: 130px ">We're here to help and answer any question you might have. We look forward to hearing from you!.</p>
+
+    <section class="contact-section">
+        <h2>Send Us a Message</h2>
+        <p class="p">Fill out the form below and we'll get back to you as soon as possible.</p>
+        <form id="contact-form">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Inquiry about..." required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="7" placeholder="Write your message here..." required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+        <div id="form-message"></div>
+    </section>
+
+   
+
+    <section class="contact-info-section">
+        <h2>Other Ways to Connect</h2>
+        <p>Prefer to reach out directly? Here are our contact details and hours.</p>
+
+        <div class="contact-info-item">
+            <h3>Email Us</h3>
+            <p>For general inquiries, support, or partnership opportunities.</p>
+            <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>
+            <a href="mailto:support@yourcompany.com">support@yourcompany.com</a>
+        </div>
+
+        <div class="contact-info-item">
+            <h3>Call Us</h3>
+            <p>Speak directly with our team during business hours.</p>
+            <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+            <p>Toll-Free: <a href="tel:+18001234567">+1 (800) 123-4567</a></p>
+        </div>
+
+        <div class="contact-info-item">
+            <h3>Visit Our Office</h3>
+            <p>Our physical location for in-person meetings or visits.</p>
+            <address>
+                123 Main Street<br>
+                Suite 400<br>
+                Anytown, CA 90210<br>
+                USA
+            </address>
+        </div>
+
+        <div class="contact-info-item">
+            <h3>Business Hours</h3>
+            <p>We're available to assist you during these times:</p>
+            <p>Monday - Friday: 9:00 AM - 5:00 PM (PST)</p>
+            <p>Saturday: 10:00 AM - 2:00 PM (PST)</p>
+            <p>Sunday: Closed</p>
+        </div>
+
+        <div class="contact-info-item">
+            <h3>Follow Us</h3>
+            <p>Stay connected and get updates on our social media channels.</p>
+            <div class="social-links">
+                <a href="https://facebook.com/yourcompany" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i>Facebook</a>
+                <a href="https://twitter.com/yourcompany" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i>Twitter</a>
+                <a href="https://linkedin.com/company/yourcompany" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i>LinkedIn</a>
+                <a href="https://instagram.com/yourcompany" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i>Instagram</a>
+            </div>
+            <p class="small-text">(Icons are placeholders, integrate actual icon library like Font Awesome)</p>
+        </div>
+    </section>
+
+   
+    <section class="map-section">
+        <h2>Find Us on the Map</h2>
+        <p>Locate our office easily using the interactive map below.</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.7139934947935!2d-118.33703348478477!3d34.05830918060867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2bf05f23d49f7%3A0xc07a16e537441865!2sHollywood%20Walk%20of%20Fame!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+ 
+
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find quick answers to the most common questions.</p>
+
+        <div class="faq-item">
+            <div class="faq-question">What services do you offer?</div>
+            <div class="faq-answer">
+                We offer a wide range of services including web design, mobile app development, digital marketing, and IT consulting. Our goal is to provide comprehensive solutions tailored to your business needs.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I request a quote?</div>
+            <div class="faq-answer">
+                You can request a quote by filling out the contact form above, emailing us directly at <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>, or calling us at <a href="tel:+1234567890">+1 (234) 567-890</a>. Please provide as much detail as possible about your project.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What are your typical project timelines?</div>
+            <div class="faq-answer">
+                Project timelines vary depending on the scope and complexity. A small website might take 4-6 weeks, while a complex application could take several months. We'll provide an estimated timeline after our initial consultation.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Do you offer ongoing support after project completion?</div>
+            <div class="faq-answer">
+                Yes, we offer various support and maintenance packages to ensure your project continues to run smoothly. This can include updates, bug fixes, and performance monitoring.
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/web/contact.js') }}"></script>
+<script src="https://kit.fontawesome.com/your-font-awesome-kit-code.js" crossorigin="anonymous"></script>
+{% endblock %}
